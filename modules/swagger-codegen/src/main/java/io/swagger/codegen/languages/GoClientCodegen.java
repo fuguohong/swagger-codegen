@@ -8,6 +8,7 @@ import io.swagger.models.parameters.Parameter;
 
 import java.io.File;
 import java.util.*;
+import java.nio.file.Paths;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -60,13 +61,7 @@ public class GoClientCodegen extends AbstractGoCodegen {
     @Override
     public void processOpts() {
         super.processOpts();
-
-        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
-            setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
-        }
-        else {
-            setPackageName("swagger");
-        }
+        setPackageName(Paths.get(outputFolder).getFileName().toString());
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
@@ -86,12 +81,13 @@ public class GoClientCodegen extends AbstractGoCodegen {
 
         supportingFiles.add(new SupportingFile("swagger.mustache", "api", "swagger.yaml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
-        supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
-        supportingFiles.add(new SupportingFile("response.mustache", "", "response.go"));
-        supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
+//        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+//        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+//        supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
+//        supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
+//        supportingFiles.add(new SupportingFile("response.mustache", "", "response.go"));
+//        supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
+//        supportingFiles.add(new SupportingFile("go.mod.mustache", "", "go.mod"));
 
         if(additionalProperties.containsKey(WITH_XML)) {
             setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
